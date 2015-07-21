@@ -69,7 +69,21 @@ public class SinglyLinkedList<E> {
     return e;
   }
 
+  public void listAll() {
+    Node<E> n = head;
+    while (n != tail) {
+      System.out.print(n.getElement() + " -> ");
+      n = n.getNext();
+    }
+    System.out.print(n.getElement() + "\n");
+  }
+
   public static void main(String[] args) {
     System.out.println("Howdy!\n");
+    SinglyLinkedList<String> sll = new SinglyLinkedList<String>();
+    sll.addFirst("A");
+    sll.addFirst("B");
+    sll.addLast("C");
+    sll.listAll();
   }
 }
