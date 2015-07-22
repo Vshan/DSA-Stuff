@@ -4,14 +4,11 @@ struct Node {
   int element;
   struct Node* next;
   struct Node* prev;
-} *sentinel;
-
-sentinel->next = NULL;
-sentinel->prev = NULL;
+};
 
 typedef struct Node* NODE;
 
-//NODE sentinel = (NODE) malloc (sizeof(struct Node));
+NODE sentinel = (NODE) malloc (sizeof(struct Node));
 
 void addFront(int e) {
   NODE n = (NODE) malloc (sizeof(struct Node));
