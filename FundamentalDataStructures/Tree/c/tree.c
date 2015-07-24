@@ -11,27 +11,13 @@ typedef struct Tree* TREE;
 
 TREE root;
 TREE construct_tree(int);
-void addChildTo(TREE, int);
-TREE getLastChild(TREE);
+void add_child_to(TREE, int);
+TREE get_last_child(TREE);
 void display_children(TREE);
 void preorder_traversal(TREE);
 TREE search(TREE, int);
 
 void main() {
-  // root = construct_tree(1);
-  // addChildTo(root, 2);
-  // addChildTo(root, 3);
-  // addChildTo(root, 4);
-  // display_children(root);
-  // addChildTo(root->first_child, 5);
-  // addChildTo(root->first_child->first_child, 15);
-  // addChildTo(root->first_child->first_child, 20);
-  // addChildTo(root->first_child, 6);
-  // addChildTo(root->first_child->first_child, 6);
-  // addChildTo(root->first_child->next_sibling, 9);
-  // printf("CHeck this out!\n");
-  // preorder_traversal(root);
-
   while(1) {
     if (!root) {
       int ele;
@@ -46,7 +32,7 @@ void main() {
       printf("\nEnter the element to be added: ");
       int ele;
       scanf("%d", &ele);
-      addChildTo(search(root, sea), ele);
+      add_child_to(search(root, sea), ele);
     }
   }
 }
@@ -76,8 +62,8 @@ TREE search(TREE t, int e) {
   return NULL;
 }
 
-void addChildTo(TREE t, int e) {
-  TREE last_tree = getLastChild(t);
+void add_child_to(TREE t, int e) {
+  TREE last_tree = get_last_child(t);
   if (last_tree) {
     TREE new_tree = construct_tree(e);
     last_tree->next_sibling = new_tree;
@@ -89,7 +75,7 @@ void addChildTo(TREE t, int e) {
   }
 }
 
-TREE getLastChild(TREE t) {
+TREE get_last_child(TREE t) {
   if (t->first_child) {
     TREE child = t->first_child;
     while (child->next_sibling) {
