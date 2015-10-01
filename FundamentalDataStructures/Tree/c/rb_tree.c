@@ -61,6 +61,9 @@ rb_tree new_rb_tree() {
 
 void left_rotate(rb_tree t, rb_node x) {
   rb_node y = x->right;
+  x->right = y->left;
+  if (y->left != t->nil)
+    y->left->parent = x;
   y->parent = x->parent;
   if (x->parent == t->nil) {
     t->root = y;
@@ -71,15 +74,15 @@ void left_rotate(rb_tree t, rb_node x) {
   else {
     x->parent->right = y;
   }
-  x->right = y->left;
-  if (y->left != t->nil)
-    y->left->parent = x;
   y->left = x;
   x->parent = y;
 }
 
 void right_rotate(rb_tree t, rb_node y) {
   rb_node x = y->left;
+  y->left = x->right;
+  if (x->right != t->nil)
+    x->right->parent = y;
   x->parent = y->parent;
   if (y->parent == t->nil) {
     t->root = x;
@@ -90,9 +93,6 @@ void right_rotate(rb_tree t, rb_node y) {
   else {
     y->parent->right = x;
   }
-  y->left = x->right;
-  if (x->right != t->nil)
-    x->right->parent = y;
   x->right = y;
   y->parent = x;
 }
@@ -104,7 +104,7 @@ void insert(rb_tree t, int k) {
 
   while (walk != t->nil) {
     p = walk;
-    if (k > walk->right->key)
+    if (k > walk->key)
       walk = walk->right;
     else
       walk = walk->left;
@@ -134,30 +134,27 @@ void insert_fixup(rb_tree t, rb_node n) {
         uncle->colour = BLACK;
         z->parent->parent->colour = RED;
         z = z->parent->parent;
-      }
-      else if (z == z->parent->right) {
-        z = z->parent;
-        left_rotate(t, z);
-      }
-      else {
+      } else {
+        if (z == z->parent->right) {
+          z = z->parent;
+          left_rotate(t, z);
+        }
         z->parent->colour = BLACK;
         z->parent->parent->colour = RED;
         right_rotate(t, z->parent->parent);
       }
-    }
-    else if (z->parent == z->parent->parent->right) {
+    } else { //(z->parent == z->parent->parent->right)
       rb_node uncle = z->parent->parent->left;
       if (uncle->colour == RED) {
         z->parent->colour = BLACK;
         uncle->colour = BLACK;
         z->parent->parent->colour = RED;
         z = z->parent->parent;
-      }
-      else if (z == z->parent->left) {
-        z = z->parent;
-        right_rotate(t, z);
-      }
-      else {
+      } else {
+        if (z == z->parent->left) {
+          z = z->parent;
+          right_rotate(t, z);
+        }
         z->parent->colour = BLACK;
         z->parent->parent->colour = RED;
         left_rotate(t, z->parent->parent);
@@ -211,10 +208,26 @@ void inorder(rb_tree t, rb_node n) {
 
 void main() {
   rb_tree rb_t = new_rb_tree();
+  rb_tree rb_t2 = new_rb_tree();
   int i;
-  for (i = 1; i <= 6; i++)
+  for (i = 1; i <= 60; i++) {
     insert(rb_t, i);
+  }
+  // 15, 8, 10, 12, 18, 25, 20.
+  insert(rb_t2, 15);
+  insert(rb_t2, 8);
+  insert(rb_t2, 10);
+  insert(rb_t2, 12);
+  insert(rb_t2, 18);
+  insert(rb_t2, 25);
+  insert(rb_t2, 20);
+  insert(rb_t2, 3);
+  // insert(rb_t2, 2);
+  // insert(rb_t2, 1);
   preorder_traversal(rb_t);
   postorder_traversal(rb_t);
   inorder_traversal(rb_t);
+  preorder_traversal(rb_t2);
+  postorder_traversal(rb_t2);
+  inorder_traversal(rb_t2);
 }
