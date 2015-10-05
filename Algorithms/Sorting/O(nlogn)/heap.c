@@ -15,9 +15,13 @@ void max_heapify(int A[], int i) {
   a = A[i];
   b = A[LEFT(i)];
   c = A[RIGHT(i)];
-  l = i;
-  if ((LEFT(i) <= heap_size) && (RIGHT(i) <= heap_size))
-    l = (a > b? (a > c? i : RIGHT(i)) : (b > c? LEFT(i) : RIGHT(i)));
+  
+  if (LEFT(i) <= heap_size && b > a)
+    l = LEFT(i);
+  else l = i;
+  if (RIGHT(i) <= heap_size && c > A[l])
+    l = RIGHT(i);
+
 
   if (l != i) {
     temp = A[l];
@@ -29,7 +33,7 @@ void max_heapify(int A[], int i) {
 
 void build_max_heap(int A[], int n) {
   int i;
-  heap_size = n-1;
+  heap_size = n;
   for (i = (n/2); i > 0; i--)
     max_heapify(A, i);
 }
