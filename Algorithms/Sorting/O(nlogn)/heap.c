@@ -22,7 +22,6 @@ void max_heapify(int A[], int i) {
   if (RIGHT(i) <= heap_size && c > A[l])
     l = RIGHT(i);
 
-
   if (l != i) {
     temp = A[l];
     A[l] = A[i];
