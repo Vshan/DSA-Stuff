@@ -15,7 +15,7 @@ void max_heapify(int A[], int i) {
   a = A[i];
   b = A[LEFT(i)];
   c = A[RIGHT(i)];
-  
+
   if (LEFT(i) <= heap_size && b > a)
     l = LEFT(i);
   else l = i;
